@@ -4,7 +4,14 @@ import com.orangehrm.models.Employee;
 import com.orangehrm.pages.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.Duration;
 
 /** PIM - Add Employee form. */
 public class AddEmployeePage extends BasePage {
@@ -15,6 +22,10 @@ public class AddEmployeePage extends BasePage {
     private static final By LAST_NAME = By.name("lastName");
     private static final By EMPLOYEE_ID = fieldInput("Employee Id");
     private static final By SAVE_BUTTON = By.cssSelector("form button[type='submit']");
+    private static final By ANY_FIELD_ERROR = By.cssSelector(".oxd-input-field-error-message");
+    private static final String PERSONAL_DETAILS_URL = "/pim/viewPersonalDetails/empNumber/";
+    private static final Duration SAVE_RESPONSE_TIMEOUT = Duration.ofSeconds(10);
+    private static final Logger LOG = LoggerFactory.getLogger(AddEmployeePage.class);
 
     public AddEmployeePage(WebDriver driver) {
         super(driver);
@@ -53,12 +64,31 @@ public class AddEmployeePage extends BasePage {
         return this;
     }
 
-    /** Clicks Save and waits for the redirect to the new employee's Personal Details page. */
+    /**
+     * Clicks Save and waits for the redirect to the new employee's Personal Details page.
+     * On the shared demo a Save click is occasionally ignored while the asynchronous Employee Id
+     * uniqueness check is still running. If no redirect and no validation message follow, Save is
+     * clicked once more. This cannot create a duplicate, because a second save of the same ID would
+     * be rejected with "Employee Id already exists".
+     */
     @Step("Save the new employee")
     public PersonalDetailsPage save() {
         clickSave();
-        waitForUrlContaining("/pim/viewPersonalDetails/empNumber/");
+        if (!redirectedWithin(SAVE_RESPONSE_TIMEOUT) && !isDisplayed(ANY_FIELD_ERROR)) {
+            LOG.warn("Save on Add Employee had no effect after {}s; clicking Save again", SAVE_RESPONSE_TIMEOUT.toSeconds());
+            clickSave();
+        }
+        waitForUrlContaining(PERSONAL_DETAILS_URL);
         return new PersonalDetailsPage(driver);
+    }
+
+    private boolean redirectedWithin(Duration timeout) {
+        try {
+            new WebDriverWait(driver, timeout).until(ExpectedConditions.urlContains(PERSONAL_DETAILS_URL));
+            return true;
+        } catch (TimeoutException noRedirectYet) {
+            return false;
+        }
     }
 
     /** Clicks Save without waiting for the outcome, so the caller can read the toast or validation messages. */

@@ -6,6 +6,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -66,6 +67,23 @@ public final class TestDataFactory {
     /** A random weekday between {@code minDaysAhead} and {@code maxDaysAhead} days from today. */
     public static LocalDate randomWeekday(int minDaysAhead, int maxDaysAhead) {
         return nextWeekday(ThreadLocalRandom.current().nextInt(minDaysAhead, maxDaysAhead + 1));
+    }
+
+    /**
+     * The first pair of consecutive calendar days on or after {@code start} where both days are
+     * working days: not a Saturday or Sunday and not in {@code holidays}. A leave request for such
+     * a pair is expected to count exactly 2 days.
+     */
+    public static LocalDate[] consecutiveWorkingDays(LocalDate start, Set<LocalDate> holidays) {
+        LocalDate day = start;
+        while (!isWorkingDay(day, holidays) || !isWorkingDay(day.plusDays(1), holidays)) {
+            day = day.plusDays(1);
+        }
+        return new LocalDate[] {day, day.plusDays(1)};
+    }
+
+    public static boolean isWorkingDay(LocalDate date, Set<LocalDate> holidays) {
+        return !isWeekend(date) && !holidays.contains(date);
     }
 
     public static boolean isWeekend(LocalDate date) {
