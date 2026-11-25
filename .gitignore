@@ -1,0 +1,19 @@
+target/
+.idea/
+*.iml
+.vscode/
+allure-results/
+allure-report/
+
+# Screenshots are generated per run; only the curated, stable-named ones are committed.
+screenshots/*
+!screenshots/README.md
+!screenshots/01-*.png
+!screenshots/02-*.png
+!screenshots/03-*.png
+!screenshots/04-*.png
+!screenshots/05-*.png
+!screenshots/06-*.png
+
+# Assessment brief supplied by the employer (not part of the deliverable).
+Task instructions/
