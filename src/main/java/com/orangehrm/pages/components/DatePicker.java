@@ -28,10 +28,6 @@ public class DatePicker extends BasePage {
         click(label);
     }
 
-    public String value() {
-        return value(input);
-    }
-
     public String format(LocalDate date) {
         return formatter().format(date);
     }

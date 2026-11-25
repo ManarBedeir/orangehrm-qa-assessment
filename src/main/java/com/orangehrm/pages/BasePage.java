@@ -11,7 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -58,11 +57,6 @@ public abstract class BasePage {
     protected WebElement visible(By locator) {
         waitForLoaders();
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
-    protected List<WebElement> allVisible(By locator) {
-        waitForLoaders();
-        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
     protected boolean isDisplayed(By locator) {

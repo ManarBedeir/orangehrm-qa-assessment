@@ -72,11 +72,13 @@ public final class TestDataFactory {
     /**
      * The first pair of consecutive calendar days on or after {@code start} where both days are
      * working days: not a Saturday or Sunday and not in {@code holidays}. A leave request for such
-     * a pair is expected to count exactly 2 days.
+     * a pair is expected to count exactly 2 days. Both days are in the same calendar year, so the
+     * request stays inside one (calendar-year) leave period.
      */
     public static LocalDate[] consecutiveWorkingDays(LocalDate start, Set<LocalDate> holidays) {
         LocalDate day = start;
-        while (!isWorkingDay(day, holidays) || !isWorkingDay(day.plusDays(1), holidays)) {
+        while (!isWorkingDay(day, holidays) || !isWorkingDay(day.plusDays(1), holidays)
+                || day.getYear() != day.plusDays(1).getYear()) {
             day = day.plusDays(1);
         }
         return new LocalDate[] {day, day.plusDays(1)};

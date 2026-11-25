@@ -92,8 +92,4 @@ public class AssignLeavePage extends BasePage {
     public String toDateError() {
         return text(fieldError("To Date"));
     }
-
-    public String format(LocalDate date) {
-        return fromDate.format(date);
-    }
 }

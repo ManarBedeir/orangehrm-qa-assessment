@@ -17,3 +17,6 @@ screenshots/*
 
 # Assessment brief supplied by the employer (not part of the deliverable).
 Task instructions/
+
+# Allure CLI downloaded by allure-maven
+.allure/

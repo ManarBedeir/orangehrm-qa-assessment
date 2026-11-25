@@ -59,9 +59,11 @@ public class LeaveTest extends LoggedInBaseTest {
         menu.openTab("Assign Leave");
         AssignLeavePage assignPage = new AssignLeavePage(driver()).waitUntilLoaded()
                 .selectEmployee(employee.fullName())
-                .selectLeaveType(leaveType);
+                .selectLeaveType(leaveType)
+                .setDates(from, to);
+        // The balance is shown for the leave period of the selected dates, so it is checked after they are set.
         assertEquals(assignPage.balance(), ENTITLEMENT_DAYS + ".00 Day(s)", "Balance shows the added entitlement");
-        assignPage.setDates(from, to).enterComment(comment);
+        assignPage.enterComment(comment);
         ScreenshotUtil.capture(driver(), "06-leave-request");
         assignPage.clickAssign();
 

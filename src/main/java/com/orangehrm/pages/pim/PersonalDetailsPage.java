@@ -52,7 +52,11 @@ public class PersonalDetailsPage extends BasePage {
 
     /** Name shown above the profile picture, e.g. "Automation QA2511…". */
     public String headerName() {
-        return text(HEADER_NAME);
+        // The header renders empty first and is filled in once the employee data arrives.
+        return waitFor(() -> {
+            String name = text(HEADER_NAME);
+            return name.isEmpty() ? null : name;
+        });
     }
 
     public PersonalDetailsPage setLastName(String lastName) {
