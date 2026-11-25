@@ -5,15 +5,17 @@ import com.orangehrm.config.ConfigReader;
 import com.orangehrm.pages.DashboardPage;
 import com.orangehrm.pages.LoginPage;
 import com.orangehrm.utils.ScreenshotUtil;
+import com.orangehrm.utils.TestDataFactory;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-/** Step 1 - Login. */
+/** Step 1 - Login, plus a negative check for invalid credentials. */
 @Feature("Login")
 public class LoginTest extends BaseTest {
 
@@ -40,5 +42,15 @@ public class LoginTest extends BaseTest {
         assertTrue(dashboard.isDisplayed(), "Dashboard is displayed after login");
         assertFalse(dashboard.loggedInUserName().isBlank(), "Logged-in user name is shown in the top bar");
         ScreenshotUtil.capture(driver(), "01-login-dashboard");
+    }
+
+    @Test(groups = {"negative", "regression"}, description = "A wrong password is rejected and the user stays on the login page")
+    public void invalidPasswordIsRejected() {
+        LoginPage loginPage = new LoginPage(driver()).open();
+        loginPage.loginAs(ConfigReader.username(), "wrong-" + TestDataFactory.uniqueEmployeeId());
+
+        assertEquals(loginPage.errorMessage(), "Invalid credentials", "Login error message");
+        assertTrue(loginPage.isDisplayed(), "User stays on the login page");
+        assertTrue(driver().getCurrentUrl().contains("/auth/login"), "No redirect to the dashboard");
     }
 }
