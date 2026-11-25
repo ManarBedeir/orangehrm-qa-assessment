@@ -1,6 +1,7 @@
 package com.orangehrm.pages;
 
 import com.orangehrm.pages.components.SideMenu;
+import com.orangehrm.pages.pim.EmployeeListPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -28,5 +29,10 @@ public class DashboardPage extends BasePage {
 
     public String loggedInUserName() {
         return menu.loggedInUserName();
+    }
+
+    public EmployeeListPage openPim() {
+        menu.openModule("PIM");
+        return new EmployeeListPage(driver).waitUntilLoaded();
     }
 }

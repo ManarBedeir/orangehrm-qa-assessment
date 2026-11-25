@@ -34,7 +34,7 @@ public abstract class BasePage {
 
     /** XPath of the OXD input group whose label text is exactly {@code label}. */
     protected static String fieldXpath(String label) {
-        return "//label[normalize-space()='" + label + "']/ancestor::div[contains(@class,'oxd-input-group')][1]";
+        return "//label[normalize-space()='" + label + "']/ancestor::div[contains(concat(' ', @class, ' '),' oxd-input-group ')][1]";
     }
 
     protected static By fieldGroup(String label) {

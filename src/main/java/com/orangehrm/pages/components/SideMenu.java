@@ -20,7 +20,7 @@ public class SideMenu extends BasePage {
     }
 
     public void openTab(String tab) {
-        click(By.xpath("//nav[contains(@class,'oxd-topbar-body-nav')]//a[normalize-space()='" + tab + "']"));
+        click(By.xpath("//a[contains(@class,'oxd-topbar-body-nav-tab-item')][normalize-space()='" + tab + "']"));
         waitForLoaders();
     }
 
