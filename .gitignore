@@ -20,3 +20,6 @@ Task instructions/
 
 # Allure CLI downloaded by allure-maven
 .allure/
+
+# Office lock files
+~$*

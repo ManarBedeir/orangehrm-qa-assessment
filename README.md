@@ -121,7 +121,7 @@ Key design decisions:
 │   └── simplelogger.properties
 ├── screenshots/                            representative screenshots (runtime ones are git-ignored)
 ├── reports/sample/                         example Allure report (single HTML file)
-└── docs/manual-testing/                    questions and risks, test cases (+ .xlsx), bug report
+└── docs/manual-testing/                    requirements review, test cases (+ .xlsx), bug report (Word + PDF)
 ```
 
 ## 5. Running the tests
@@ -284,9 +284,11 @@ What cannot be fully cleaned up, and why:
 
 ## 12. Manual testing deliverables
 
-| File | Content |
+Each document is provided as Word (.docx) and PDF.
+
+| Document | Content |
 |---|---|
-| [01-questions-ambiguities-risks.md](docs/manual-testing/01-questions-ambiguities-risks.md) | Questions per user story, AC and flow step; gaps between the flow and the ACs; assumptions; risks |
-| [02-test-scenarios-and-cases.md](docs/manual-testing/02-test-scenarios-and-cases.md) | 8 scenarios, 57 test cases (ID, AC, preconditions, steps, data, expected result, priority, type), traceability matrix |
+| Requirements review ([PDF](docs/manual-testing/01-Requirements-Review-Questions-and-Risks.pdf), [Word](docs/manual-testing/01-Requirements-Review-Questions-and-Risks.docx)) | Questions per user story, AC and flow step; gaps between the flow and the ACs; assumptions; risks |
+| Test scenarios and test cases ([PDF](docs/manual-testing/02-Test-Scenarios-and-Test-Cases.pdf), [Word](docs/manual-testing/02-Test-Scenarios-and-Test-Cases.docx)) | 8 scenarios, 57 test cases (ID, AC, preconditions, steps, data, expected result, priority, type), traceability matrix |
 | [test-cases.xlsx](docs/manual-testing/test-cases.xlsx) | The same test cases as a filterable spreadsheet, with Status and Actual-result columns for execution |
-| [03-bug-report.md](docs/manual-testing/03-bug-report.md) | Defect report: 10–12 Aug shows 3 days but deducts 4 (10 Aug 2026 is a Monday) |
+| Bug report ([PDF](docs/manual-testing/03-Bug-Report-Leave-Balance-Deduction.pdf), [Word](docs/manual-testing/03-Bug-Report-Leave-Balance-Deduction.docx)) | Defect report: 10–12 Aug shows 3 days but deducts 4 (10 Aug 2026 is a Monday) |
